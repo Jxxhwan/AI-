@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>EYEDOG</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
+      rel="stylesheet"
+    />
+    <link href="{{ url_for('static', filename="css/styles.css") }}" rel="stylesheet" />
+    <script
+      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+      <!-- Navbar Brand-->
+      <a class="navbar-brand ps-3" href="index.html">EYEDOG</a>
+
+      <!--
+        <header id="header" class="alt">
+          <nav id="nav">
+            <ul>
+              <li class="special">
+              <a href="#menu" class="menuToggle"><span>Menu</span></a>
+                <div id="menu">
+                  <ul>
+                    <li><a href="index.html">진료 일정</a></li>
+                    <li><a href="generic.html">진료 차트</a></li>
+                    <li><a href="elements.html">히스토리</a></li>
+                    <li><a href="#">진단하기</a></li>
+                    <li><a href="#">스케줄</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        -->
+
+        <style>
+          .navbar {
+              background-color: #222529;
+              margin-bottom: 0; /* 상단 바와 콘텐츠 영역 사이의 여백 제거 */
+          }
+          .navbar-brand img {
+              height: 40px;
+          }
+          .nav-link {
+              color: #FFFFFF !important;
+              margin-right: 15px;
+          }
+          .content {
+            padding: 20px; /* 콘텐츠 영역의 내부 여백 추가 */
+          }
+      </style>
+  </head>
+  <body>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark">
+
+      <div class="collapse navbar-collapse">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="tables.html">진료 일정</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="charts.html">진료 차트</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="history.html">히스토리</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="demo.html">진단 하기</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="index.html">스케줄</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+      
+      <!-- Sidebar Toggle-->
+      <button
+        class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+        id="sidebarToggle"
+        href="#!"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <!-- Navbar Search-->
+      <form
+        class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+      >
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Search for..."
+            aria-label="Search for..."
+            aria-describedby="btnNavbarSearch"
+          />
+          <button class="btn btn-primary" id="btnNavbarSearch" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+      <!-- Navbar-->
+      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ><i class="fas fa-user fa-fw"></i
+          ></a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li><a class="dropdown-item" href="#!">Settings</a></li>
+            <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#!">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div id="layoutSidenav">
+      <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <div class="sb-sidenav-menu-heading">Core</div>
+              <a class="nav-link" href="index.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                Dashboard
+              </a>
+              <div class="sb-sidenav-menu-heading">Interface</div>
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseLayouts"
+                aria-expanded="false"
+                aria-controls="collapseLayouts"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-columns"></i>
+                </div>
+                Layouts
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapseLayouts"
+                aria-labelledby="headingOne"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav class="sb-sidenav-menu-nested nav">
+                  <a class="nav-link" href="layout-static.html"
+                    >Static Navigation</a
+                  >
+                  <a class="nav-link" href="layout-sidenav-light.html"
+                    >Light Sidenav</a
+                  >
+                </nav>
+              </div>
+              <a
+                class="nav-link collapsed"
+                href="#"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapsePages"
+                aria-expanded="false"
+                aria-controls="collapsePages"
+              >
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-book-open"></i>
+                </div>
+                Pages
+                <div class="sb-sidenav-collapse-arrow">
+                  <i class="fas fa-angle-down"></i>
+                </div>
+              </a>
+              <div
+                class="collapse"
+                id="collapsePages"
+                aria-labelledby="headingTwo"
+                data-bs-parent="#sidenavAccordion"
+              >
+                <nav
+                  class="sb-sidenav-menu-nested nav accordion"
+                  id="sidenavAccordionPages"
+                >
+                  <a
+                    class="nav-link collapsed"
+                    href="#"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseAuth"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseAuth"
+                  >
+                    Authentication
+                    <div class="sb-sidenav-collapse-arrow">
+                      <i class="fas fa-angle-down"></i>
+                    </div>
+                  </a>
+                  <div
+                    class="collapse"
+                    id="pagesCollapseAuth"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordionPages"
+                  >
+                    <nav class="sb-sidenav-menu-nested nav">
+                      <a class="nav-link" href="login.html">Login</a>
+                      <a class="nav-link" href="register.html">Register</a>
+                      <a class="nav-link" href="password.html"
+                        >Forgot Password</a
+                      >
+                    </nav>
+                  </div>
+                  <a
+                    class="nav-link collapsed"
+                    href="#"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#pagesCollapseError"
+                    aria-expanded="false"
+                    aria-controls="pagesCollapseError"
+                  >
+                    Error
+                    <div class="sb-sidenav-collapse-arrow">
+                      <i class="fas fa-angle-down"></i>
+                    </div>
+                  </a>
+                  <div
+                    class="collapse"
+                    id="pagesCollapseError"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#sidenavAccordionPages"
+                  >
+                    <nav class="sb-sidenav-menu-nested nav">
+                      <a class="nav-link" href="401.html">401 Page</a>
+                      <a class="nav-link" href="404.html">404 Page</a>
+                      <a class="nav-link" href="500.html">500 Page</a>
+                    </nav>
+                  </div>
+                </nav>
+              </div>
+              <div class="sb-sidenav-menu-heading">Addons</div>
+              <a class="nav-link" href="charts.html">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-chart-area"></i>
+                </div>
+                Charts
+              </a>
+              <a class="nav-link" href="tables.html">
+                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                Tables
+              </a>
+            </div>
+          </div>
+          <div class="sb-sidenav-footer">
+            <div class="small">Logged in as:</div>
+            Start Bootstrap
+          </div>
+        </nav>
+      </div>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid px-4">
+            <h1 class="mt-4">AI 반려견 안구질환 진단 보조 서비스</h1>
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <div class="row">
+              <div class="col-xl-3 col-md-6">
+                <div class="card bg-primary text-white mb-4">
+                  <div class="card-body" onclick="location.href='tables.html'">
+                    지난 진단결과 확인
+                  </div>
+                  <div
+                    class="card-footer d-flex align-items-center justify-content-between"
+                  >
+                    <a
+                      class="small text-white stretched-link"
+                      onclick="location.href='tables.html'"
+                      >View Details</a
+                    >
+                    <div class="small text-white">
+                      <i class="fas fa-angle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-6">
+                <div class="card bg-warning text-white mb-4">
+                  <div class="card-body" onclick="location.href='demo.html'">
+                    다음 진단 하기
+                  </div>
+                  <div
+                    class="card-footer d-flex align-items-center justify-content-between"
+                  >
+                    <!--
+                    <a class="small text-white stretched-link" href="#"
+                      >View Details</a
+                    >-->
+                    <a
+                      class="small text-white stretched-link"
+                      onclick="location.href='demo.html'"
+                      >View Details</a
+                    >
+                    <div class="small text-white">
+                      <i class="fas fa-angle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-6">
+                <div class="card bg-success text-white mb-4">
+                  <div class="card-body" onclick="location.href='view.html'">
+                    마이페이지
+                  </div>
+                  <div
+                    class="card-footer d-flex align-items-center justify-content-between"
+                  >
+                    <a
+                      class="small text-white stretched-link"
+                      onclick="location.href='view.html'"
+                      >View Details</a
+                    >
+                    <div class="small text-white">
+                      <i class="fas fa-angle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--
+              <div class="col-xl-3 col-md-6">
+                <div class="card bg-danger text-white mb-4">
+                  <div class="card-body" onclick="location.href='view.html'">
+                    Danger Card
+                  </div>
+                  <div
+                    class="card-footer d-flex align-items-center justify-content-between"
+                  >
+                    <a
+                      class="small text-white stretched-link"
+                      onclick="location.href='view.html'"
+                      >View Details</a
+                    >
+                    <div class="small text-white">
+                      <i class="fas fa-angle-right"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            -->
+            <div class="row">
+              <div class="col-xl-6">
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Area Chart Example
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-6">
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    Bar Chart Example
+                  </div>
+                  <div class="card-body">
+                    <canvas id="myBarChart" width="100%" height="40"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mb-4">
+              <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                DataTable Example
+              </div>
+              <div class="card-body">
+                <table id="datatablesSimple">
+                  <thead>
+                    <tr>
+                      <th>담당 의사</th>
+                      <th>반려견 이름</th>
+                      <th>반려견 품종</th>
+                      <th>반려견 나이</th>
+                      <th>진료일</th>
+                      <th>진단 결과</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>담당 의사</th>
+                      <th>반려견 이름</th>
+                      <th>반려견 품종</th>
+                      <th>반려견 나이</th>
+                      <th>진료일</th>
+                      <th>진단 결과</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <tr>
+                      <td>Tiger Nixon</td>
+                      <td>마루</td>
+                      <td>미니어처 푸들</td>
+                      <td>3</td>
+                      <td>2011/04/25</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Garrett Winters</td>
+                      <td>대박이</td>
+                      <td>말티푸</td>
+                      <td>3</td>
+                      <td>2011/07/25</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Ashton Cox</td>
+                      <td>초롱이</td>
+                      <td>이탈리안 그레이하운드</td>
+                      <td>6</td>
+                      <td>2009/01/12</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Cedric Kelly</td>
+                      <td>바둑이</td>
+                      <td>말티즈</td>
+                      <td>2</td>
+                      <td>2012/03/29</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Airi Satou</td>
+                      <td>나나</td>
+                      <td>토이푸들</td>
+                      <td>3</td>
+                      <td>2008/11/28</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Brielle Williamson</td>
+                      <td>또또</td>
+                      <td>불도그</td>
+                      <td>1</td>
+                      <td>2012/12/02</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Herrod Chandler</td>
+                      <td>윤이</td>
+                      <td>치와와</td>
+                      <td>5</td>
+                      <td>2012/08/06</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Rhona Davidson</td>
+                      <td>라봉이</td>
+                      <td>닥스훈트</td>
+                      <td>5</td>
+                      <td>2010/10/14</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Colleen Hurst</td>
+                      <td>비비</td>
+                      <td>비글</td>
+                      <td>9</td>
+                      <td>2009/09/15</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Sonya Frost</td>
+                      <td>또롱이</td>
+                      <td>셰퍼드</td>
+                      <td>2</td>
+                      <td>2008/12/13</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Jena Gaines</td>
+                      <td>별이</td>
+                      <td>시베리안 허스키</td>
+                      <td>3</td>
+                      <td>2008/12/19</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Quinn Flynn</td>
+                      <td>초코</td>
+                      <td>골든 리트리버</td>
+                      <td>2</td>
+                      <td>2013/03/03</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Charde Marshall</td>
+                      <td>봉구</td>
+                      <td>레브라도 리트리버</td>
+                      <td>6</td>
+                      <td>2008/10/16</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Haley Kennedy</td>
+                      <td>구름이</td>
+                      <td>보더콜리</td>
+                      <td>4</td>
+                      <td>2012/12/18</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Tatyana Fitzpatrick</td>
+                      <td>패트</td>
+                      <td>비숑</td>
+                      <td>9</td>
+                      <td>2010/03/17</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Michael Silva</td>
+                      <td>매트</td>
+                      <td>포메라니안</td>
+                      <td>6</td>
+                      <td>2012/11/27</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Paul Byrd</td>
+                      <td>마리</td>
+                      <td>요크셔테리어</td>
+                      <td>4</td>
+                      <td>2010/06/09</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Gloria Little</td>
+                      <td>하찌</td>
+                      <td>말티즈</td>
+                      <td>5</td>
+                      <td>2009/04/10</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Bradley Greer</td>
+                      <td>흰둥이</td>
+                      <td>베들링턴테리어</td>
+                      <td>1</td>
+                      <td>2012/10/13</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Dai Rios</td>
+                      <td>코코</td>
+                      <td>시바견</td>
+                      <td>5</td>
+                      <td>2012/09/26</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Jenette Caldwell</td>
+                      <td>써니</td>
+                      <td>웰시코기</td>
+                      <td>3</td>
+                      <td>2011/09/03</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Yuri Berry</td>
+                      <td>덕구</td>
+                      <td>말티푸</td>
+                      <td>4</td>
+                      <td>2009/06/25</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Caesar Vance</td>
+                      <td>모찌</td>
+                      <td>미니어처 푸들</td>
+                      <td>1</td>
+                      <td>2011/12/12</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Doris Wilder</td>
+                      <td>한결</td>
+                      <td>토이 푸들</td>
+                      <td>3</td>
+                      <td>2010/09/20</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Angelica Ramos</td>
+                      <td>겨울이</td>
+                      <td>웰시코기</td>
+                      <td>7</td>
+                      <td>2009/10/09</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Gavin Joyce</td>
+                      <td>정아</td>
+                      <td>사모예드</td>
+                      <td>4</td>
+                      <td>2010/12/22</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Jennifer Chang</td>
+                      <td>다솜</td>
+                      <td>웰시코기</td>
+                      <td>2</td>
+                      <td>2010/11/14</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Brenden Wagner</td>
+                      <td>시온</td>
+                      <td>말티푸</td>
+                      <td>8</td>
+                      <td>2011/06/07</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Fiona Green</td>
+                      <td>가을이</td>
+                      <td>시베리안허스키</td>
+                      <td>8</td>
+                      <td>2010/03/11</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Shou Itou</td>
+                      <td>봄이</td>
+                      <td>비글</td>
+                      <td>2</td>
+                      <td>2011/08/14</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Michelle House</td>
+                      <td>미미</td>
+                      <td>푸들</td>
+                      <td>7</td>
+                      <td>2011/06/02</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Suki Burks</td>
+                      <td>보라</td>
+                      <td>말티푸</td>
+                      <td>5</td>
+                      <td>2009/10/22</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Prescott Bartlett</td>
+                      <td>디디</td>
+                      <td>말티푸</td>
+                      <td>7</td>
+                      <td>2011/05/07</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Gavin Cortez</td>
+                      <td>가온</td>
+                      <td>토이푸들</td>
+                      <td>2</td>
+                      <td>2008/10/26</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Martena Mccray</td>
+                      <td>커피</td>
+                      <td>말티푸</td>
+                      <td>6</td>
+                      <td>2011/03/09</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Unity Butler</td>
+                      <td>케이</td>
+                      <td>말티즈</td>
+                      <td>4</td>
+                      <td>2009/12/09</td>
+                      <td>결막염</td>
+                    </tr>
+                    <tr>
+                      <td>Howard Hatfield</td>
+                      <td>Office Manager</td>
+                      <td>San Francisco</td>
+                      <td>5</td>
+                      <td>2008/12/16</td>
+                      <td>백내장</td>
+                    </tr>
+                    <tr>
+                      <td>Hope Fuentes</td>
+                      <td>Secretary</td>
+                      <td>San Francisco</td>
+                      <td>41</td>
+                      <td>2010/02/12</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Vivian Harrell</td>
+                      <td>Financial Controller</td>
+                      <td>San Francisco</td>
+                      <td>62</td>
+                      <td>2009/02/14</td>
+                      <td>정상</td>
+                    </tr>
+                    <tr>
+                      <td>Timothy Mooney</td>
+                      <td>Office Manager</td>
+                      <td>London</td>
+                      <td>37</td>
+                      <td>2008/12/11</td>
+                      <td>$136,200</td>
+                    </tr>
+                    <tr>
+                      <td>Jackson Bradshaw</td>
+                      <td>Director</td>
+                      <td>New York</td>
+                      <td>65</td>
+                      <td>2008/09/26</td>
+                      <td>$645,750</td>
+                    </tr>
+                    <tr>
+                      <td>Olivia Liang</td>
+                      <td>Support Engineer</td>
+                      <td>Singapore</td>
+                      <td>64</td>
+                      <td>2011/02/03</td>
+                      <td>$234,500</td>
+                    </tr>
+                    <tr>
+                      <td>Bruno Nash</td>
+                      <td>Software Engineer</td>
+                      <td>London</td>
+                      <td>38</td>
+                      <td>2011/05/03</td>
+                      <td>$163,500</td>
+                    </tr>
+                    <tr>
+                      <td>Sakura Yamamoto</td>
+                      <td>Support Engineer</td>
+                      <td>Tokyo</td>
+                      <td>37</td>
+                      <td>2009/08/19</td>
+                      <td>$139,575</td>
+                    </tr>
+                    <tr>
+                      <td>Thor Walton</td>
+                      <td>Developer</td>
+                      <td>New York</td>
+                      <td>61</td>
+                      <td>2013/08/11</td>
+                      <td>$98,540</td>
+                    </tr>
+                    <tr>
+                      <td>Finn Camacho</td>
+                      <td>Support Engineer</td>
+                      <td>San Francisco</td>
+                      <td>47</td>
+                      <td>2009/07/07</td>
+                      <td>$87,500</td>
+                    </tr>
+                    <tr>
+                      <td>Serge Baldwin</td>
+                      <td>Data Coordinator</td>
+                      <td>Singapore</td>
+                      <td>64</td>
+                      <td>2012/04/09</td>
+                      <td>$138,575</td>
+                    </tr>
+                    <tr>
+                      <td>Zenaida Frank</td>
+                      <td>Software Engineer</td>
+                      <td>New York</td>
+                      <td>63</td>
+                      <td>2010/01/04</td>
+                      <td>$125,250</td>
+                    </tr>
+                    <tr>
+                      <td>Zorita Serrano</td>
+                      <td>Software Engineer</td>
+                      <td>San Francisco</td>
+                      <td>56</td>
+                      <td>2012/06/01</td>
+                      <td>$115,000</td>
+                    </tr>
+                    <tr>
+                      <td>Jennifer Acosta</td>
+                      <td>Junior Javascript Developer</td>
+                      <td>Edinburgh</td>
+                      <td>43</td>
+                      <td>2013/02/01</td>
+                      <td>$75,650</td>
+                    </tr>
+                    <tr>
+                      <td>Cara Stevens</td>
+                      <td>Sales Assistant</td>
+                      <td>New York</td>
+                      <td>46</td>
+                      <td>2011/12/06</td>
+                      <td>$145,600</td>
+                    </tr>
+                    <tr>
+                      <td>Hermione Butler</td>
+                      <td>Regional Director</td>
+                      <td>London</td>
+                      <td>47</td>
+                      <td>2011/03/21</td>
+                      <td>$356,250</td>
+                    </tr>
+                    <tr>
+                      <td>Lael Greer</td>
+                      <td>Systems Administrator</td>
+                      <td>London</td>
+                      <td>21</td>
+                      <td>2009/02/27</td>
+                      <td>$103,500</td>
+                    </tr>
+                    <tr>
+                      <td>Jonas Alexander</td>
+                      <td>Developer</td>
+                      <td>San Francisco</td>
+                      <td>30</td>
+                      <td>2010/07/14</td>
+                      <td>$86,500</td>
+                    </tr>
+                    <tr>
+                      <td>Shad Decker</td>
+                      <td>Regional Director</td>
+                      <td>Edinburgh</td>
+                      <td>51</td>
+                      <td>2008/11/13</td>
+                      <td>$183,000</td>
+                    </tr>
+                    <tr>
+                      <td>Michael Bruce</td>
+                      <td>Javascript Developer</td>
+                      <td>Singapore</td>
+                      <td>29</td>
+                      <td>2011/06/27</td>
+                      <td>$183,000</td>
+                    </tr>
+                    <tr>
+                      <td>Donna Snider</td>
+                      <td>Customer Support</td>
+                      <td>New York</td>
+                      <td>27</td>
+                      <td>2011/01/25</td>
+                      <td>$112,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+          <div class="container-fluid px-4">
+            <div
+              class="d-flex align-items-center justify-content-between small"
+            >
+              <div class="text-muted">Copyright &copy; Your Website 2023</div>
+              <div>
+                <a href="#">Privacy Policy</a>
+                &middot;
+                <a href="#">Terms &amp; Conditions</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{{ url_for('static', filename="js/scripts.js") }}"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{{ url_for('static', filename="assets/demo/chart-area-demo.js") }}"></script>
+    <script src="{{ url_for('static', filename="assets/demo/chart-bar-demo.js") }}"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="{{ url_for('static', filename="js/datatables-simple-demo.js") }}"></script>
+  </body>
+</html>
