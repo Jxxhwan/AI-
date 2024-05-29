@@ -10,5 +10,8 @@
 # 기능 
   1. 총 5가지의 질병에 대해 분류 가능
   2. CAM을 통해 설명가능한 AI 제공
-  3. EMR차트와 연계하여 히스토리 기능 제공 가능
-![Uploading image.png…]()
+  4. EMR차트와 연계하여 히스토리 기능 제공 가능
+
+[사용 화면]
+![image](https://github.com/Jxxhwan/dog_eyes/assets/118601707/67fe5f62-3958-468a-938e-3853be528fd8)
+
